@@ -12,7 +12,13 @@ object EntryPoint {
     val numBs = logData.filter(line => line.contains("b")).count()
 
     println(s"Lines with a: $numAs, Lines with b: $numBs")
+    println(s"Lines with a: $numAs, Lines with b: $numBs")
 
+    val set = Set ("asdasd", "asdasd")
+    
     spark.stop()
+
+    val list = List (1, 2, 3)
+    list.map (a => a * 2).foreach (x => println (x))
   }
 }
