@@ -15,4 +15,5 @@ object GenericMain extends App {
 
   println(func1[Int](list, (a, b) => a + b))
   println(func2(list))
+  println
 }
