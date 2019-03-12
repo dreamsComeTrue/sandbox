@@ -9,3 +9,10 @@ libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.19"
 libraryDependencies += "com.typesafe.akka" %% "akka-stream" % "2.5.19"
 libraryDependencies += "com.typesafe.akka" %% "akka-http" % "10.1.1"
 libraryDependencies += "com.typesafe.akka" %% "akka-testkit" % "2.5.19" % Test
+
+libraryDependencies += "org.typelevel" %% "cats-core" % "1.6.0"
+
+scalacOptions ++= Seq(
+  "-Xfatal-warnings",
+  "-Ypartial-unification"
+)

@@ -5,3 +5,4 @@ target/
 pc.stdout.log
 ensime-langserver.log
 .ensime
+.metals/
