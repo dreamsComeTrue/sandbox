@@ -35,13 +35,25 @@ object Compiler {
     ce.compile(value)
 }
 
+object CompilerInterfaceSyntax {
+
+  implicit class CompilerOps[A](value: A) {
+    def compile(implicit ce: CompilerEngine[A]): ASTElement =
+      ce.compile(value)
+  }
+
+}
+
 object CompilerApp {
-
-  import CompilerEngineInstances._
-
   def main(args: Array[String]): Unit = {
+    import CompilerEngineInstances._
+
     println(Compiler.compile(LangAssignment(LangString("hello"), LangNumber(12))))
     println(Compiler.compile(LangAssignment(LangString("var"), LangString("iable"))))
     println(Compiler.compile(LangAssignment(LangString("not_work"), LangNull)))
+
+    import CompilerInterfaceSyntax._
+
+    println(LangAssignment(LangString("hello"), LangNumber(12)).compile)
   }
 }
