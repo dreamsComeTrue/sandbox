@@ -24,10 +24,16 @@ trait CompilerEngine[A] {
   def compile(element: A): ASTElement
 }
 
-object CompilerEngineInstances {
+object CompilerEngine {
   implicit val langStringCompiler: CompilerEngine[String] = (element: String) => LangString(element)
   implicit val langNumberCompiler: CompilerEngine[Double] = (element: Double) => LangNumber(element)
   implicit val langAssignmentCompiler: CompilerEngine[LangAssignment] = (element: LangAssignment) => LangAssignment(element.obj)
+
+  implicit def optionCompiler[A](implicit compiler: CompilerEngine[A]): CompilerEngine[Option[A]] =
+    (option: Option[A]) => option match {
+      case Some(aValue) => compiler.compile(aValue)
+      case None => LangNull
+    }
 }
 
 object Compiler {
@@ -46,14 +52,14 @@ object CompilerInterfaceSyntax {
 
 object CompilerApp {
   def main(args: Array[String]): Unit = {
-    import CompilerEngineInstances._
-
     println(Compiler.compile(LangAssignment(LangString("hello"), LangNumber(12))))
     println(Compiler.compile(LangAssignment(LangString("var"), LangString("iable"))))
-    println(Compiler.compile(LangAssignment(LangString("not_work"), LangNull)))
+    println(Compiler.compile(LangAssignment(LangString("not_work"), LangNull))(implicitly[CompilerEngine[LangAssignment]]))
 
     import CompilerInterfaceSyntax._
 
     println(LangAssignment(LangString("hello"), LangNumber(12)).compile)
+
+    println(Compiler.compile(Option(LangAssignment(LangString("option"), LangString("Is great")))))
   }
 }
