@@ -10,7 +10,11 @@ object Implicits {
   }
 
   def foldLeftTest[B: Numeric](data: Seq[B])(implicit num: Numeric[B]) = {
-    data.foldLeft(num.zero)((a, b) => num.plus(a, b))
+    data.foldLeft(num.zero)((a, b) => {
+      println(s"Folding: $a, $b")
+
+      num.plus(a, b)
+    })
   }
 
   def sumTest[B: Numeric](data: Seq[B])(implicit num: Numeric[B]) = {
